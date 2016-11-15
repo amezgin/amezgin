@@ -9,7 +9,7 @@ import static org.junit.Assert.assertThat;
 /**
  * Test.
  *
- * @author Alexander Mezgin 
+ * @author Alexander Mezgin
  * @version 1
  * @since 14.11.2016
  */
