@@ -12,5 +12,6 @@
 	<modules>
         <module>JVM</module>
 		<module>Data type</module>
+		<module>Conditional operator</module>
 	</modules>
 </project>
