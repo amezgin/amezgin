@@ -13,5 +13,6 @@
         <module>JVM</module>
 		<module>Data type</module>
 		<module>Conditional operator</module>
+		<module>Loops</module>
 	</modules>
 </project>
