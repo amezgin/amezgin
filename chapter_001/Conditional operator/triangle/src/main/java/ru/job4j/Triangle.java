@@ -37,38 +37,14 @@ public class Triangle {
 	}
 
 	/**
-	 *This method returns the vertex of the triangle.
-	 *@return Return of the vertex of the triangle
-	 */
-	public Point getA() {
-		return this.a;
-	}
-
-	/**
-	 *This method returns the vertex of the triangle.
-	 *@return Return of the vertex of the triangle
-	 */
-	public Point getB() {
-		return this.b;
-	}
-
-	/**
-	 *This method returns the vertex of the triangle.
-	 *@return Return of the vertex of the triangle
-	 */
-	public Point getC() {
-		return this.c;
-	}
-
-	/**
 	 *This method calculates the area of a triangle Heron's formula.
 	 *@return It is the area of a triangle
 	 *@throws Exception - "It is impossible to construct a triangle with these vertices"
 	 */
 	public double area() throws Exception {
-	double sideAB = this.getA().distanceTo(this.getB());
-	double sideAC = this.getA().distanceTo(this.getC());
-	double sideBC = this.getB().distanceTo(this.getC());
+	double sideAB = this.a.distanceTo(this.b);
+	double sideAC = this.a.distanceTo(this.c);
+	double sideBC = this.b.distanceTo(this.c);
 
 	if ((sideAB >= sideAC + sideBC) && (sideAC >= sideAB + sideBC) && (sideBC >= sideAC + sideAB)) {
 		throw new Exception("It is impossible to construct a triangle with these vertices");

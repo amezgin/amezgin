@@ -29,27 +29,11 @@ public class Point {
 	}
 
 	/**
-	 *This method returns the value point on the x-axis.
-	 *@return Return of the value point on the x-axis
-	 */
-	public double getX() {
-		return this.x;
-	}
-
-	/**
-	 *This method returns the value point on the y-axis.
-	 *@return Return of the value point on the y-axis
-	 */
-	public double getY() {
-		return this.y;
-	}
-
-	/**
 	 *This method calculates the distance between two points.
 	 *@param point is passed a point
 	 *@return It is return distans between two points
 	 */
 	public double distanceTo(Point point) {
-		return Math.sqrt(Math.pow(this.getX() - point.getX(), 2) + Math.pow(this.getY() - point.getY(), 2));
+		return Math.sqrt(Math.pow(this.x - point.x, 2) + Math.pow(this.y - point.y, 2));
 	}
 }
