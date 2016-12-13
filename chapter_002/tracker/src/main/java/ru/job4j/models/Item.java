@@ -1,5 +1,7 @@
 package ru.job4j.models;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -122,5 +124,22 @@ public class Item {
      */
     public void setDateCreat(Date dateCreat) {
         this.dateCreat = dateCreat;
+    }
+
+
+    /**
+     *Override the nethod toString".
+     *@return item toString
+     */
+    @Override
+    public String toString() {
+        DateFormat dateFormat = new SimpleDateFormat("dd.MM.yy HH:mm");
+        return "Item{"
+                + "id = '" + id + '\''
+                + ", name = '" + name + '\''
+                + ", description = '" + description + '\''
+                + ", dateCreat = " + dateFormat.format(dateCreat) + '\''
+                + ", comment = '" + comments + '\''
+                + '}';
     }
 }
