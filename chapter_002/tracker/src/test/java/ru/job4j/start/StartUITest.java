@@ -202,7 +202,7 @@ public class StartUITest {
         item.setId("1");
         item1.setId("2");
 
-        final String[] answers = {"1","comment"};
+        final String[] answers = {"1", "comment"};
         final StubInput stubInput = new StubInput(answers);
 
         final String id = stubInput.ask("Enter the id of the item to which to add a comment: ");
