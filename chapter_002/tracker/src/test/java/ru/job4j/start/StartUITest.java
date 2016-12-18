@@ -27,14 +27,16 @@ public class StartUITest {
     public void whenAddItemThenAddedItemToTracker() {
         final Tracker tracker = new Tracker();
 
-        final String[] answers = {"name", "descr"};
+        final String[] answers = {"0", "name", "descr"};
         final StubInput stubInput = new StubInput(answers);
 
-        final Item item = new Item(
-                stubInput.ask("Input the name of the item: "),
-                stubInput.ask("Input the description of the item: "));
+        MenuTracker menuTracker = new MenuTracker(stubInput, tracker);
 
-        final Item result = tracker.addItem(item);
+        menuTracker.fillAction();
+
+        final int key = Integer.valueOf(stubInput.ask("Question!"));
+
+        menuTracker.select(key);
 
         assertNotNull(tracker.getAllItem().get(0));
     }
@@ -46,8 +48,10 @@ public class StartUITest {
     public void whenDeleteItemThenReturnEditedListItem() {
         final Tracker tracker = new Tracker();
 
-        final String[] answers = {"1"};
+        final String[] answers = {"1", "1"};
         final StubInput stubInput = new StubInput(answers);
+
+        MenuTracker menuTracker = new MenuTracker(stubInput, tracker);
 
         final Item item = new Item("name", "descr");
         final Item item1 = new Item("name1", "descr1");
@@ -61,7 +65,11 @@ public class StartUITest {
         final List<Item> checked = new ArrayList<>();
         checked.add(item1);
 
-        tracker.removeItem(tracker.findById(stubInput.ask("Enter the id of the deleted item: ")));
+        menuTracker.fillAction();
+
+        final int key = Integer.valueOf(stubInput.ask("Question!"));
+
+        menuTracker.select(key);
 
         assertThat(tracker.getAllItem(), is(checked));
     }
@@ -73,8 +81,9 @@ public class StartUITest {
     public void whenEditItemThenReturnEditedItem() {
         final Tracker tracker = new Tracker();
 
-        final String[] answers = {"1", "itemEdit", "descrEdit"};
+        final String[] answers = {"2", "1", "itemEdit", "descrEdit"};
         final StubInput stubInput = new StubInput(answers);
+        MenuTracker menuTracker = new MenuTracker(stubInput, tracker);
 
         final Item item = new Item("name", "descr");
         final Item item1 = new Item("name1", "descr1");
@@ -84,20 +93,21 @@ public class StartUITest {
 
         item.setId("1");
 
-        final String id = stubInput.ask("Enter the id of the edited item: ");
-        final Item itemEdit = new Item(
-                stubInput.ask("Input the new name of the item: "),
-                stubInput.ask("Input the new description of the item: "));
+        final Item itemEdit = new Item("itemEdit", "descrEdit");
 
-        itemEdit.setId(id);
+        itemEdit.setId("1");
 
-        tracker.editItem(itemEdit);
+        final String checkedName = "itemEdit";
 
-        final List<Item> checked = new ArrayList<>();
-        checked.add(itemEdit);
-        checked.add(item1);
+        menuTracker.fillAction();
 
-        assertThat(tracker.getAllItem(), is(checked));
+        final int key = Integer.valueOf(stubInput.ask("Question!"));
+
+        menuTracker.select(key);
+
+        final String resultName = tracker.getAllItem().get(0).getName();
+
+        assertThat(resultName, is(checkedName));
     }
 
     /**
@@ -107,9 +117,20 @@ public class StartUITest {
     public void whenGetAllItemThenReturnSizeListItemOne() {
         final Tracker tracker = new Tracker();
 
+        final String[] answers = {"3"};
+        final StubInput stubInput = new StubInput(answers);
+
+        MenuTracker menuTracker = new MenuTracker(stubInput, tracker);
+
         final Item item = new Item("name", "descr");
 
         tracker.addItem(item);
+
+        menuTracker.fillAction();
+
+        final int key = Integer.valueOf(stubInput.ask("Question!"));
+
+        menuTracker.select(key);
 
         assertThat(tracker.getAllItem().size(), is(1));
     }
@@ -121,6 +142,11 @@ public class StartUITest {
     public void whenFindByIdThenReturnSearchedItem() {
         final Tracker tracker = new Tracker();
 
+        final String[] answers = {"4", "1"};
+        final StubInput stubInput = new StubInput(answers);
+
+        MenuTracker menuTracker = new MenuTracker(stubInput, tracker);
+
         final Item item = new Item("name", "descr");
         final Item item1 = new Item("name1", "descr1");
 
@@ -130,12 +156,13 @@ public class StartUITest {
         item.setId("1");
         item1.setId("2");
 
-        final String[] answers = {"1"};
-        final StubInput stubInput = new StubInput(answers);
+        menuTracker.fillAction();
 
-        final String id = stubInput.ask("Enter the id of the searched item: ");
+        final int key = Integer.valueOf(stubInput.ask("Question!"));
 
-        assertThat(tracker.findById(id), is(item));
+        menuTracker.select(key);
+
+        assertThat(tracker.findById("1"), is(item));
     }
 
     /**
@@ -145,18 +172,23 @@ public class StartUITest {
     public void whenFindByNameThenReturnSearchedItem() {
         final Tracker tracker = new Tracker();
 
+        final String[] answers = {"5", "name1"};
+        final StubInput stubInput = new StubInput(answers);
+
+        MenuTracker menuTracker = new MenuTracker(stubInput, tracker);
         final Item item = new Item("name", "descr");
         final Item item1 = new Item("name1", "descr1");
 
         tracker.addItem(item);
         tracker.addItem(item1);
 
-        final String[] answers = {"name1"};
-        final StubInput stubInput = new StubInput(answers);
+        menuTracker.fillAction();
 
-        final String name = stubInput.ask("Enter the name of the searched item: ");
+        final int key = Integer.valueOf(stubInput.ask("Question!"));
 
-        assertThat(tracker.findByName(name), is(item1));
+        menuTracker.select(key);
+
+        assertThat(tracker.findByName("name1"), is(item1));
     }
 
     /**
@@ -165,6 +197,10 @@ public class StartUITest {
     @Test
     public void whenFindByDescriptionThenReturnSearchedListItem() {
         final Tracker tracker = new Tracker();
+        final String[] answers = {"6", "descr"};
+        final StubInput stubInput = new StubInput(answers);
+
+        MenuTracker menuTracker = new MenuTracker(stubInput, tracker);
 
         final Item item = new Item("name", "descr");
         final Item item1 = new Item("name1", "desr1");
@@ -178,12 +214,13 @@ public class StartUITest {
         checked.add(item);
         checked.add(item2);
 
-        final String[] answers = {"desc"};
-        final StubInput stubInput = new StubInput(answers);
+        menuTracker.fillAction();
 
-        final String descr = stubInput.ask("Enter the description of the searched item: ");
+        final int key = Integer.valueOf(stubInput.ask("Question!"));
 
-        assertThat(tracker.findByDescription(descr), is(checked));
+        menuTracker.select(key);
+
+        assertThat(tracker.findByDescription("descr"), is(checked));
     }
 
     /**
@@ -192,6 +229,11 @@ public class StartUITest {
     @Test
     public void whenAddCommentThenReturnItemWithComment() {
         final Tracker tracker = new Tracker();
+
+        final String[] answers = {"7", "1", "comment"};
+        final StubInput stubInput = new StubInput(answers);
+
+        MenuTracker menuTracker = new MenuTracker(stubInput, tracker);
 
         final Item item = new Item("name", "descr");
         final Item item1 = new Item("name1", "desr1");
@@ -202,14 +244,14 @@ public class StartUITest {
         item.setId("1");
         item1.setId("2");
 
-        final String[] answers = {"1", "comment"};
-        final StubInput stubInput = new StubInput(answers);
+        final Comment comment = new Comment("comment");
+        tracker.addComment("1", comment);
 
-        final String id = stubInput.ask("Enter the id of the item to which to add a comment: ");
-        final String comm = stubInput.ask("Enter the comment: ");
+        menuTracker.fillAction();
 
-        final Comment comment = new Comment(comm);
-        tracker.addComment(id, comment);
+        final int key = Integer.valueOf(stubInput.ask("Question!"));
+
+        menuTracker.select(key);
 
         assertThat(tracker.findById("1").getAllComments().get(0), is(comment));
     }
