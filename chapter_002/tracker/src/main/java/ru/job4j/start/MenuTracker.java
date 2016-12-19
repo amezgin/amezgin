@@ -80,11 +80,12 @@ public class MenuTracker {
 
     /**
      *This method return a number of ranges users action.
+     *@return int[] range
      */
     public int[] getRangeActions() {
         int[] range = new int[arrayslength];
 
-        for(int i = 0; i < arrayslength; i++) {
+        for (int i = 0; i < arrayslength; i++) {
             range[i] = userActions[i].key();
         }
         return range;

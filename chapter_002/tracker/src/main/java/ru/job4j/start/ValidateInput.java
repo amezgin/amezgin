@@ -1,8 +1,14 @@
 package ru.job4j.start;
 
-public class ValidateInput extends ConsoleInput{
+/**
+ *The class ValidateInput.
+ * @author Alexander Mezgin
+ * @since 19.12.2016
+ * @version 1.0
+ */
+public class ValidateInput extends ConsoleInput {
 
-    /*
+    /**
     *The method asks number from the range.
     *@param question
     *@param range
@@ -12,7 +18,7 @@ public class ValidateInput extends ConsoleInput{
     public int ask(String question, int[] range) {
         boolean invalid = true;
         int value = -1;
-        do{
+        do {
             try {
                 value = super.ask(question, range);
                 invalid = false;

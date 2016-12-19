@@ -6,7 +6,7 @@ package ru.job4j.start;
  * @since 19.12.2016
  * @version 1.0
  */
-public class MenuOutException extends RuntimeException{
+public class MenuOutException extends RuntimeException {
     /**
      * Constructor fo class MenuOutException.
      * @param message message
