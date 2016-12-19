@@ -34,4 +34,16 @@ public class StubInput implements Input {
     public String ask(String question) {
         return answers[position++];
     }
+
+    /**
+     *This method asks question and number of range the user.
+     *@param question is question
+     *@param range is range
+     *@return question
+     */
+    @Override
+    public int ask(String question, int[] range) {
+        //throw new UnsupportedOperationException("Not supported yet.");
+        return -1;
+    }
 }

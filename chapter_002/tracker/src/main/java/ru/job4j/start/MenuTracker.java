@@ -79,6 +79,18 @@ public class MenuTracker {
     }
 
     /**
+     *This method return a number of ranges users action.
+     */
+    public int[] getRangeActions() {
+        int[] range = new int[arrayslength];
+
+        for(int i = 0; i < arrayslength; i++) {
+            range[i] = userActions[i].key();
+        }
+        return range;
+    }
+
+    /**
      * The inner class AddItem.
      */
     private class AddItem implements UserAction {

@@ -14,4 +14,12 @@ public interface Input {
      *@return question
      */
     String ask(String question);
+
+    /**
+     *This method asks question and number of range the user.
+     *@param question is question
+     *@param range is range
+     *@return question
+     */
+    public int ask(String question, int[] range);
 }
