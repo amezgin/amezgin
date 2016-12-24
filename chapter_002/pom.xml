@@ -12,5 +12,6 @@
 	<modules>
 		<module>tracker</module>
 		<module>testtask</module>
+        <module>answers</module>
 	</modules>
 </project>
