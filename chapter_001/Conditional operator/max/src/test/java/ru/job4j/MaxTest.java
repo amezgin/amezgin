@@ -16,7 +16,7 @@ public class MaxTest {
      * Test max with two arguments.
      */
     @Test
-    public void whenAddTwoValuesThenReturnMax() {
+    public void whenAddTwoAnyValuesThenReturnMax() {
         final Max maxValue = new Max();
 
 		final int checked = 3;
@@ -32,7 +32,7 @@ public class MaxTest {
      * Test max with three arguments.
      */
     @Test
-    public void whenAddTwoValuesThenReturnMax() {
+    public void whenAddThreeValuesThenReturnMax() {
         final Max maxValue = new Max();
 
 		final int checked = 4;
@@ -52,11 +52,27 @@ public class MaxTest {
     public void whenAddTwoValuesThenReturnMax() {
         final Max maxValue = new Max();
 
-		final int checked = 3;
-		final int first = 3;
-		final int second = 3;
+        final int checked = 3;
+        final int first = 3;
+        final int second = 3;
 
-		final int result = maxValue.max(first, second);
+        final int result = maxValue.max(first, second);
+
+        assertThat(result, is(checked));
+    }
+
+    /**
+     * Test max with two arguments, when they are equal.
+     */
+    @Test
+    public void whenAddTwoValuesThenReturnMax1() {
+        final Max maxValue = new Max();
+
+        final int checked = 5;
+        final int first = 5;
+        final int second = 3;
+
+        final int result = maxValue.max(first, second);
 
         assertThat(result, is(checked));
     }

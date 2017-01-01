@@ -26,7 +26,7 @@ package ru.job4j;
 		}
 		for (int i = 1; i <= h; i++) {
 			for (int j = 1; j <= widthPyr; j++) {
-				if ((j <= h - i) || (j >= h + i)) {
+				if (j <= h - i || j >= h + i) {
 					pyramid.append(" ");
 				} else {
 					pyramid.append(" ^");

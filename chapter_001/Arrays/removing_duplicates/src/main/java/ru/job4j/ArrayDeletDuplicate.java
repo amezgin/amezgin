@@ -39,9 +39,7 @@ public class ArrayDeletDuplicate {
 
         expectArray = new String[arr.length - count];
 
-        expectArray = reqArray(arr, expectArray);
-
-        return expectArray;
+        return reqArray(arr, expectArray);
     }
 
 	/**

@@ -14,7 +14,7 @@
 		<module>Data type</module>
 		<module>Conditional operator</module>
 		<module>Loops</module>
-		<module>Arrays</module>
+		<module>arrays</module>
 		<module>TestTask</module>
 	</modules>
 </project>

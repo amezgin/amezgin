@@ -46,7 +46,7 @@ public class Triangle {
 	double sideAC = this.a.distanceTo(this.c);
 	double sideBC = this.b.distanceTo(this.c);
 
-	if ((sideAB >= sideAC + sideBC) && (sideAC >= sideAB + sideBC) && (sideBC >= sideAC + sideAB)) {
+	if (sideAB >= sideAC + sideBC && sideAC >= sideAB + sideBC && sideBC >= sideAC + sideAB) {
 		throw new Exception("It is impossible to construct a triangle with these vertices");
 	}
 

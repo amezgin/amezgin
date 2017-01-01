@@ -14,10 +14,10 @@ import static org.junit.Assert.assertThat;
  public class PaintTest {
 
 	/**
-     * Test pyramid(int h) with correct heigth.
+     * Test pyramid(int h) with correct height.
      */
     @Test
-	public void whenAddHeigthEqualsTwoThenReturnPyramid() {
+	public void whenAddHeightEqualsTwoThenReturnPyramid() {
 		final Paint paint = new Paint();
 
 		final String checked = "  ^  \n\r ^ ^ \n\r";
@@ -29,10 +29,10 @@ import static org.junit.Assert.assertThat;
 	}
 
 	/**
-     * Test pyramid(int h) with incorrect heigth.
+     * Test pyramid(int h) with incorrect height.
      */
     @Test
-	public void whenAddIncorrectHeigthThenReturnError() {
+	public void whenAddIncorrectHeightThenReturnError() {
 		final Paint paint = new Paint();
 
 		final String checked = "You can't build a pyramid with that height!";
