@@ -53,7 +53,7 @@ public class FileSearcherTest {
      * Test for method init() with ValidateException.
      *
      * @throws IOException       IOException
-     * @throws ValidateException "The first key must be equals \"-d\"."
+     * @throws ValidateException "The first key must be equals "-d"."
      */
     @Test(expected = ValidateException.class)
     public void whenGetIncorrectKeyDirThenReturnException() throws IOException, ValidateException {
@@ -66,7 +66,7 @@ public class FileSearcherTest {
      * Test for method init() with ValidateException.
      *
      * @throws IOException       IOException
-     * @throws ValidateException "The second key must be equals \"-n\"."
+     * @throws ValidateException "The second key must be equals "-n"."
      */
     @Test(expected = ValidateException.class)
     public void whenGetIncorrectKeyFileThenReturnException() throws IOException, ValidateException {
@@ -79,7 +79,7 @@ public class FileSearcherTest {
      * Test for method init() with ValidateException.
      *
      * @throws IOException       IOException
-     * @throws ValidateException "The fourth key must be equals \"-m\", \"-f\" or \"-r\"."
+     * @throws ValidateException "The fourth key must be equals "-m", "-f" or "-r"."
      */
     @Test(expected = ValidateException.class)
     public void whenGetIncorrectKeyMaskThenReturnException() throws IOException, ValidateException {
@@ -92,7 +92,7 @@ public class FileSearcherTest {
      * Test for method init() with ValidateException.
      *
      * @throws IOException       IOException
-     * @throws ValidateException "The five key must be equals \"-o\"."
+     * @throws ValidateException "The five key must be equals "-o"."
      */
     @Test(expected = ValidateException.class)
     public void whenGetIncorrectKeyLogThenReturnException() throws IOException, ValidateException {
