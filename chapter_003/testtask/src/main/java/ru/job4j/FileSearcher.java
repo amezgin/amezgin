@@ -122,15 +122,15 @@ public class FileSearcher {
             patt.append("^");
             for (char ch : chArr) {
                 switch (ch) {
-                    case ('.'): {
+                    case '.': {
                         patt.append("\\.");
                         break;
                     }
-                    case ('?'): {
+                    case '?': {
                         patt.append(".");
                         break;
                     }
-                    case ('*'): {
+                    case '*': {
                         patt.append(".*");
                         break;
                     }
@@ -145,10 +145,9 @@ public class FileSearcher {
             Matcher matcher = pattern.matcher(fileName);
             result = matcher.matches();
         }
-        if (args[4].equalsIgnoreCase("-f")) {
-            if (fileName.equalsIgnoreCase(args[3])) {
-                result = true;
-            }
+        if (args[4].equalsIgnoreCase("-f") && fileName.equalsIgnoreCase(args[3])) {
+            result = true;
+
         }
         if (args[4].equalsIgnoreCase("-r")) {
             Pattern pattern = Pattern.compile(args[3]);
