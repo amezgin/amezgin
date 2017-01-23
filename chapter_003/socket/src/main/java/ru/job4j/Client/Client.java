@@ -235,7 +235,7 @@ public class Client {
             dos.writeUTF("");
             System.out.println(dis.readUTF());
         } else {
-            File file = new File(getCurrentDirectory() + "\\" + fileName);
+            File file = new File(getCurrentDirectory(), fileName);
             if (file.exists()) {
                 dos.writeUTF(file.getName());
                 dos.writeUTF(String.valueOf(file.length()));
@@ -274,7 +274,7 @@ public class Client {
             dos.writeUTF(fileName);
             String serverAnswer = dis.readUTF();
             if (serverAnswer.equals("File exist.")) {
-                File file = new File(getCurrentDirectory() + "\\" + fileName);
+                File file = new File(getCurrentDirectory(), fileName);
                 long fileLength = Integer.valueOf(dis.readUTF());
                 try (FileOutputStream fos = new FileOutputStream(file)) {
                     byte[] buf = new byte[32 * 1024];

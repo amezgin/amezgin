@@ -402,7 +402,7 @@ public class Server {
         public void execute(DataInputStream dis, DataOutputStream dos) throws IOException {
             dos.writeUTF(String.format("To upload file go to the desired directory and enter <file_name>.%s", separator));
             String fileName = dis.readUTF();
-            File file = new File(getCurrentDirectory() + "\\" + fileName);
+            File file = new File(getCurrentDirectory(), fileName);
             if (fileName.equals("Cancel")) {
                 dos.writeUTF(String.format("Try again!%s", separator));
             } else if (fileName.equals("")) {
@@ -460,7 +460,7 @@ public class Server {
             if (fileName.equals("")) {
                 dos.writeUTF(String.format("File name mast be 1 or more symbols!%s", separator));
             } else {
-                File file = new File(getCurrentDirectory() + "\\" + fileName);
+                File file = new File(getCurrentDirectory(), fileName);
                 if (file.exists()) {
                     dos.writeUTF("File exist.");
                     dos.writeUTF(String.valueOf(file.length()));
