@@ -3,8 +3,6 @@ package ru.job4j;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * The class FileSearcher.
@@ -117,42 +115,14 @@ public class FileSearcher {
     private boolean accept(String fileName) {
         boolean result = false;
         if (args[4].equalsIgnoreCase("-m")) {
-            StringBuilder patt = new StringBuilder();
-            char[] chArr = args[3].toCharArray();
-            patt.append("^");
-            for (char ch : chArr) {
-                switch (ch) {
-                    case '.': {
-                        patt.append("\\.");
-                        break;
-                    }
-                    case '?': {
-                        patt.append(".");
-                        break;
-                    }
-                    case '*': {
-                        patt.append(".*");
-                        break;
-                    }
-                    default: {
-                        patt.append(ch);
-                        break;
-                    }
-                }
-            }
-            patt.append("$");
-            Pattern pattern = Pattern.compile(patt.toString());
-            Matcher matcher = pattern.matcher(fileName);
-            result = matcher.matches();
+            result = new SearchByMask(fileName, args[3]).checkName();
         }
-        if (args[4].equalsIgnoreCase("-f") && fileName.equalsIgnoreCase(args[3])) {
-            result = true;
+        if (args[4].equalsIgnoreCase("-f")) {
+            result = new SearchByName(fileName, args[3]).checkName();
 
         }
         if (args[4].equalsIgnoreCase("-r")) {
-            Pattern pattern = Pattern.compile(args[3]);
-            Matcher matcher = pattern.matcher(fileName);
-            result = matcher.matches();
+            result = new SearchByRegExp(fileName, args[3]).checkName();
         }
         return result;
     }
