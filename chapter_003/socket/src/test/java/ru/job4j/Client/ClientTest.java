@@ -1,4 +1,4 @@
-package ru.job4j.Client;
+package ru.job4j.client;
 
 import org.junit.Test;
 
