@@ -1,9 +1,9 @@
-package ru.job4j.Server;
+package ru.job4j.server;
 
-import ru.job4j.Action.BaseAction;
-import ru.job4j.Action.Input;
-import ru.job4j.Action.UserAction;
-import ru.job4j.Action.ValidateInput;
+import ru.job4j.action.BaseAction;
+import ru.job4j.action.Input;
+import ru.job4j.action.UserAction;
+import ru.job4j.action.ValidateInput;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;

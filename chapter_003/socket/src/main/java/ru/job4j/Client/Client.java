@@ -1,4 +1,4 @@
-package ru.job4j.Client;
+package ru.job4j.client;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -19,16 +19,6 @@ import java.util.Scanner;
  * @since 14.01.2017
  */
 public class Client {
-
-    /**
-     * DataInputStream.
-     */
-    private DataInputStream dis;
-
-    /**
-     * DataOutputStream.
-     */
-    private DataOutputStream dos;
 
     /**
      * This file description current directory.
@@ -57,53 +47,45 @@ public class Client {
      */
     public void init() throws IOException {
         loadProperties();
-        try (Socket socket = new Socket(getHost(), getPort())) {
-            try {
-                dis = new DataInputStream(socket.getInputStream());
-                dos = new DataOutputStream(socket.getOutputStream());
-                try (Scanner sc = new Scanner(System.in)) {
-                    System.out.println(dis.readUTF());
-                    String str;
-                    while (!isExit()) {
-                        System.out.println(dis.readUTF());
-                        System.out.println(dis.readUTF());
-                        str = sc.nextLine();
-                        switch (str) {
-                            case "0": {
-                                showListDirAndFiles(str);
-                                break;
-                            }
-                            case "1": {
-                                goInDir(str, sc);
-                                break;
-                            }
-                            case "2": {
-                                uploadFile(str, sc);
-                                break;
-                            }
-                            case "3": {
-                                downloadFile(str, sc);
-                                break;
-                            }
-                            case "4": {
-                                exit(str, sc);
-                                break;
-                            }
-                            case "": {
-                                dos.writeUTF("Empty line");
-                                break;
-                            }
-                            default: {
-                                dos.writeUTF(str);
-                            }
-                        }
+        try (Socket socket = new Socket(getHost(), getPort());
+             DataInputStream dis = new DataInputStream(socket.getInputStream());
+             DataOutputStream dos = new DataOutputStream(socket.getOutputStream());
+             Scanner sc = new Scanner(System.in)) {
+            System.out.println(dis.readUTF());
+            String str;
+            while (!isExit()) {
+                System.out.println(dis.readUTF());
+                System.out.println(dis.readUTF());
+                str = sc.nextLine();
+                switch (str) {
+                    case "0": {
+                        showListDirAndFiles(str, dis, dos);
+                        break;
+                    }
+                    case "1": {
+                        goInDir(str, sc, dis, dos);
+                        break;
+                    }
+                    case "2": {
+                        uploadFile(str, sc, dis, dos);
+                        break;
+                    }
+                    case "3": {
+                        downloadFile(str, sc, dis, dos);
+                        break;
+                    }
+                    case "4": {
+                        exit(str, sc, dis, dos);
+                        break;
+                    }
+                    case "": {
+                        dos.writeUTF("Empty line");
+                        break;
+                    }
+                    default: {
+                        dos.writeUTF(str);
                     }
                 }
-            } catch (IOException e) {
-                e.printStackTrace();
-            } finally {
-                dis.close();
-                dos.close();
             }
         }
     }
@@ -200,7 +182,7 @@ public class Client {
      * @param str input stream from server
      * @throws IOException IOException
      */
-    private void showListDirAndFiles(String str) throws IOException {
+    private void showListDirAndFiles(String str, DataInputStream dis, DataOutputStream dos) throws IOException {
         dos.writeUTF(str);
         System.out.println(dis.readUTF());
     }
@@ -212,7 +194,7 @@ public class Client {
      * @param scanner input from keyboard
      * @throws IOException IOException
      */
-    private void goInDir(String str, Scanner scanner) throws IOException {
+    private void goInDir(String str, Scanner scanner, DataInputStream dis, DataOutputStream dos) throws IOException {
         dos.writeUTF(str);
         System.out.println(dis.readUTF());
         System.out.println(dis.readUTF());
@@ -227,7 +209,7 @@ public class Client {
      * @param scanner input from keyboard
      * @throws IOException IOException
      */
-    private void uploadFile(String str, Scanner scanner) throws IOException {
+    private void uploadFile(String str, Scanner scanner, DataInputStream dis, DataOutputStream dos) throws IOException {
         dos.writeUTF(str);
         System.out.println(dis.readUTF());
         String fileName = scanner.nextLine();
@@ -263,7 +245,7 @@ public class Client {
      * @param scanner input from keyboard
      * @throws IOException IOException
      */
-    private void downloadFile(String str, Scanner scanner) throws IOException {
+    private void downloadFile(String str, Scanner scanner, DataInputStream dis, DataOutputStream dos) throws IOException {
         dos.writeUTF(str);
         System.out.println(dis.readUTF());
         String fileName = scanner.nextLine();
@@ -300,7 +282,7 @@ public class Client {
      * @param scanner input from keyboard
      * @throws IOException IOException
      */
-    private void exit(String str, Scanner scanner) throws IOException {
+    private void exit(String str, Scanner scanner, DataInputStream dis, DataOutputStream dos) throws IOException {
         dos.writeUTF(str);
         System.out.println(dis.readUTF());
         String exit = scanner.nextLine();
