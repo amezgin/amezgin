@@ -1,7 +1,7 @@
 package ru.job4j.models;
 
 import org.junit.Test;
-import ru.job4j.ChessExceptions.ImpossibleMoveException;
+import ru.job4j.chessexceptions.ImpossibleMoveException;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertArrayEquals;

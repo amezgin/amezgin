@@ -1,6 +1,6 @@
 package ru.job4j.models;
 
-import ru.job4j.ChessExceptions.ImpossibleMoveException;
+import ru.job4j.chessexceptions.ImpossibleMoveException;
 
 /**
  * The abstract class Figure.
@@ -39,7 +39,7 @@ public abstract class Figure {
      *
      * @param dist the cell where figure want to go.
      * @return arrays cell's.
-     * @throws ImpossibleMoveException Exception.
+     * @throws ImpossibleMoveException exception.
      */
     public abstract Cell[] way(Cell dist) throws ImpossibleMoveException;
 
@@ -48,7 +48,7 @@ public abstract class Figure {
      *
      * @param dist the cell where to move the piece.
      * @return Figure.
-     * @throws ImpossibleMoveException Exception.
+     * @throws ImpossibleMoveException exception.
      */
     public abstract Figure clone(Cell dist) throws ImpossibleMoveException;
 

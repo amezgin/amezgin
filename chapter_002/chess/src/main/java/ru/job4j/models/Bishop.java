@@ -1,6 +1,6 @@
 package ru.job4j.models;
 
-import ru.job4j.ChessExceptions.ImpossibleMoveException;
+import ru.job4j.chessexceptions.ImpossibleMoveException;
 
 import static java.lang.Math.abs;
 
@@ -30,7 +30,7 @@ public class Bishop extends Figure {
      *
      * @param dist the cell where figure want to go.
      * @return arrays cell's.
-     * @throws ImpossibleMoveException Exception.
+     * @throws ImpossibleMoveException exception.
      */
     @Override
     public Cell[] way(Cell dist) throws ImpossibleMoveException {
@@ -60,7 +60,7 @@ public class Bishop extends Figure {
      *
      * @param dist the cell where to move the piece.
      * @return figure Bishop.
-     * @throws ImpossibleMoveException Exception.
+     * @throws ImpossibleMoveException exception.
      */
     @Override
     public Bishop clone(Cell dist) throws ImpossibleMoveException {

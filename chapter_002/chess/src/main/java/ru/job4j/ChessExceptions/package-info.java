@@ -3,4 +3,4 @@
  * @version 1
  * @since 26.12.2016
  */
-package ru.job4j.ChessExceptions;
+package ru.job4j.chessexceptions;

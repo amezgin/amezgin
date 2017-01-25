@@ -1,9 +1,9 @@
 package ru.job4j;
 
 import org.junit.Test;
-import ru.job4j.ChessExceptions.FigureNotFoundException;
-import ru.job4j.ChessExceptions.ImpossibleMoveException;
-import ru.job4j.ChessExceptions.OccupiedWayException;
+import ru.job4j.chessexceptions.FigureNotFoundException;
+import ru.job4j.chessexceptions.ImpossibleMoveException;
+import ru.job4j.chessexceptions.OccupiedWayException;
 import ru.job4j.models.Bishop;
 import ru.job4j.models.Cell;
 

@@ -43,7 +43,7 @@ import static org.hamcrest.number.IsCloseTo.closeTo;
 	}
 
 	/**
-     * Test area() with Exception.
+     * Test area() with exception.
      * @throws Exception - "It is impossible to construct a triangle with these vertices"
      */
     @Test(expected = Exception.class)

@@ -1,8 +1,8 @@
 package ru.job4j;
 
-import ru.job4j.ChessExceptions.FigureNotFoundException;
-import ru.job4j.ChessExceptions.ImpossibleMoveException;
-import ru.job4j.ChessExceptions.OccupiedWayException;
+import ru.job4j.chessexceptions.FigureNotFoundException;
+import ru.job4j.chessexceptions.ImpossibleMoveException;
+import ru.job4j.chessexceptions.OccupiedWayException;
 import ru.job4j.models.Bishop;
 import ru.job4j.models.Cell;
 import ru.job4j.models.Figure;
@@ -43,9 +43,9 @@ public class Board {
      * @param source source cell.
      * @param dist   dist cell.
      * @return true or false.
-     * @throws ImpossibleMoveException Exception.
-     * @throws OccupiedWayException    Exception.
-     * @throws FigureNotFoundException Exception.
+     * @throws ImpossibleMoveException exception.
+     * @throws OccupiedWayException    exception.
+     * @throws FigureNotFoundException exception.
      */
     public boolean move(Cell source, Cell dist) throws ImpossibleMoveException, OccupiedWayException, FigureNotFoundException {
         boolean result = false;
@@ -94,7 +94,7 @@ public class Board {
      *
      * @param cell cell.
      * @return true or false.
-     * @throws FigureNotFoundException Exception.
+     * @throws FigureNotFoundException exception.
      */
     private boolean checkFigure(Cell cell) throws FigureNotFoundException {
         boolean result;
@@ -114,8 +114,8 @@ public class Board {
      * @param source source cell.
      * @param dist   dist cell.
      * @return true or false.
-     * @throws OccupiedWayException    Exception.
-     * @throws ImpossibleMoveException Exception.
+     * @throws OccupiedWayException    exception.
+     * @throws ImpossibleMoveException exception.
      */
     private boolean checkWay(Cell source, Cell dist) throws OccupiedWayException, ImpossibleMoveException {
         boolean result = true;

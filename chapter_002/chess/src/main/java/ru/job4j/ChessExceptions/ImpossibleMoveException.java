@@ -1,4 +1,4 @@
-package ru.job4j.ChessExceptions;
+package ru.job4j.chessexceptions;
 
 /**
  * The class ImpossibleMoveException.
