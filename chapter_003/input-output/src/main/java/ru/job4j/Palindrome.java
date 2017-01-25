@@ -23,16 +23,17 @@ public class Palindrome {
      */
     public boolean isPalindrome(InputStream is) throws IOException {
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(is))) {
+            String separator = System.getProperty("line.separator");
             boolean result;
             String string = reader.readLine();
             if (string.length() == 5) {
                 StringBuilder reversStr = new StringBuilder(string).reverse();
                 if (string.equalsIgnoreCase(reversStr.toString())) {
                     result = true;
-                    System.out.println(string + " is the palindrome!");
+                    System.out.printf("%s is the palindrome!%s", string, separator);
                 } else {
                     result = false;
-                    System.out.println(string + " is not the palindrome!");
+                    System.out.printf("%s is not the palindrome!%s", string, separator);
                 }
             } else {
                 result = false;
