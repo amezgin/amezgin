@@ -2,13 +2,13 @@ package ru.job4j;
 
 import ru.job4j.food.ReproductFood;
 import ru.job4j.food.Vegetables;
-import ru.job4j.store.Shop;
-import ru.job4j.store.Trash;
 import ru.job4j.store.ExtWarehouse;
-import ru.job4j.store.ReproductStore;
-import ru.job4j.store.VegetablesStore;
 import ru.job4j.store.Refrigerator;
 import ru.job4j.store.Reproduct;
+import ru.job4j.store.ReproductStore;
+import ru.job4j.store.Shop;
+import ru.job4j.store.Trash;
+import ru.job4j.store.VegetablesStore;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,10 +39,10 @@ public class ExtControlQuality extends ControlQuality {
      * @param food any food.
      */
     public void executeVegetablesStrategy(Vegetables food) {
-        super.getStore().get(1).addFood(food);
         for (VegetablesStore stor : this.storeVeg) {
             stor.addFood(food);
         }
+        super.executeStrategy(food);
     }
 
     /**
@@ -54,6 +54,7 @@ public class ExtControlQuality extends ControlQuality {
         for (ReproductStore stor : this.storeRep) {
             stor.addFood(food);
         }
+        super.executeStrategy(food);
     }
 
     /**
