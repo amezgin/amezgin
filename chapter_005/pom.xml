@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>ru.job4j.chapter_005</groupId>
+    <artifactId>chapter_005</artifactId>
+    <version>2.0</version>
+    <packaging>pom</packaging>
+    <parent>
+        <groupId>ru.job4j</groupId>
+        <artifactId>junior</artifactId>
+        <version>2.0</version>
+    </parent>
+    <modules>
+        <module>iterator</module>
+        <module>generic</module>
+        <module>list</module>
+        <module>set</module>
+        <module>map</module>
+        <module>tree</module>
+        <module>testtask</module>
+    </modules>
+</project>
