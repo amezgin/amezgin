@@ -57,9 +57,7 @@ public class EvenNumbersIterator implements Iterator {
         Integer result = null;
         while (this.index < this.values.length) {
             if (this.values[index] % 2 == 0) {
-                result = this.values[this.index];
-                this.index++;
-                return result;
+                return this.values[this.index++];
             }
             this.index++;
         }
