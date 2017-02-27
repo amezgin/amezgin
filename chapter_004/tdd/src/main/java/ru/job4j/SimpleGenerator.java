@@ -18,7 +18,10 @@ import java.util.regex.Pattern;
  */
 public class SimpleGenerator implements Template {
 
-    final static Pattern REG_EX = Pattern.compile("\\$\\{(\\w+)\\}");
+    /**
+     * The regular expression as a constant.
+     */
+    static final Pattern REG_EX = Pattern.compile("\\$\\{(\\w+)\\}");
 
     /**
      * This method replace all templates in a specified string.
