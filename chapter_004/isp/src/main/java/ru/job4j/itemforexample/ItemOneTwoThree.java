@@ -2,8 +2,6 @@ package ru.job4j.itemforexample;
 
 import ru.job4j.models.Item;
 
-import java.util.List;
-
 /**
  * The class ItemOneTwoThree.
  * This class description a example item.
@@ -20,7 +18,7 @@ public class ItemOneTwoThree extends Item {
      * @param name     name item.
      * @param children children list item.
      */
-    public ItemOneTwoThree(String name, List<Item> children) {
+    public ItemOneTwoThree(String name, Item ... children) {
         super(name, children);
     }
 

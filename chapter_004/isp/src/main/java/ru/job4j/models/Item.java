@@ -2,8 +2,6 @@ package ru.job4j.models;
 
 import ru.job4j.actions.UserAction;
 
-import java.util.List;
-
 /**
  * The class Item.
  * This interface description a some item.
@@ -22,7 +20,7 @@ public abstract class Item implements UserAction {
     /**
      * Children items.
      */
-    private List<Item> children;
+    private Item[] children;
 
     /**
      * The Constructor.
@@ -30,7 +28,7 @@ public abstract class Item implements UserAction {
      * @param name     name for item.
      * @param children list of children item.
      */
-    public Item(String name, List<Item> children) {
+    public Item(String name, Item ... children) {
         this.name = name;
         this.children = children;
     }
@@ -40,7 +38,7 @@ public abstract class Item implements UserAction {
      *
      * @return List<Item> list of current item.
      */
-    public List<Item> getChildren() {
+    public Item[] getChildren() {
         return children;
     }
 

@@ -6,9 +6,6 @@ import ru.job4j.itemforexample.ItemOneTwo;
 import ru.job4j.itemforexample.ItemOneTwoThree;
 import ru.job4j.itemforexample.ItemTwo;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * The class MenuItem.
  * This class description a menu.
@@ -20,27 +17,17 @@ import java.util.List;
 public class MenuItem {
 
     /**
-     * This field describes the menu list the first level.
+     * This field describes the menu array the first level.
      */
-    private List<Item> actions = new ArrayList<>();
-
-    /**
-     * This field describes the menu list the second level.
-     */
-    private List<Item> secondLevelMenuFistItem = new ArrayList<>();
-
-    /**
-     * This field describes the menu list the third level.
-     */
-    private List<Item> thirdLevelMenuFirstItem = new ArrayList<>();
+    private Item[] actions = new Item[2];
 
     /**
      * This method fill list of action.
      */
     public void fillAction() {
-        fillSecondLevelFirstItemAction();
-        this.actions.add(new ItemOne("Item one", secondLevelMenuFistItem));
-        this.actions.add(new ItemTwo("Item two", null));
+        this.actions[0] = new ItemOne("Item one", new ItemOneOne("Item one one", null),
+                new ItemOneTwo("Item one two", new ItemOneTwoThree("Item one two three", null)));
+        this.actions[1] = new ItemTwo("Item two", null);
     }
 
     /**
@@ -53,29 +40,13 @@ public class MenuItem {
     }
 
     /**
-     * This method fill list of action second level.
-     */
-    private void fillSecondLevelFirstItemAction() {
-        fillThirdLevelFirstItemAction();
-        this.secondLevelMenuFistItem.add(new ItemOneOne("Item one one", null));
-        this.secondLevelMenuFistItem.add(new ItemOneTwo("Item one two", thirdLevelMenuFirstItem));
-    }
-
-    /**
-     * This method fill list of action third level.
-     */
-    private void fillThirdLevelFirstItemAction() {
-        this.thirdLevelMenuFirstItem.add(new ItemOneTwoThree("Item one two three", null));
-    }
-
-    /**
      * This method fills menu.
      *
-     * @param actions     list actions.
+     * @param actions     array actions.
      * @param countPrefix the number of prefixes in front of the menu item.
      * @param prefix      show prefix.
      */
-    private void showMenu(List<Item> actions, int countPrefix, String prefix) {
+    private void showMenu(Item[] actions, int countPrefix, String prefix) {
         for (Item item : actions) {
             StringBuilder sb = new StringBuilder();
             for (int i = 0; i < countPrefix; i++) {
