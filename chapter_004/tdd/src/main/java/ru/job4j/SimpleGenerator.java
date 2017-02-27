@@ -1,9 +1,11 @@
 package ru.job4j;
 
 import ru.job4j.exception.KeyNotFoundException;
-import ru.job4j.exception.MapContainsExtraKayException;
+import ru.job4j.exception.MapContainsExtraKeyException;
 
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -16,6 +18,8 @@ import java.util.regex.Pattern;
  */
 public class SimpleGenerator implements Template {
 
+    final static Pattern REG_EX = Pattern.compile("\\$\\{(\\w+)\\}");
+
     /**
      * This method replace all templates in a specified string.
      *
@@ -23,29 +27,25 @@ public class SimpleGenerator implements Template {
      * @param mapKeyPairs map of keys.
      * @return string with replaced template.
      * @throws KeyNotFoundException         exception when key not found.
-     * @throws MapContainsExtraKayException exception when map contains extra keys.
+     * @throws MapContainsExtraKeyException exception when map contains extra keys.
      */
     @Override
     public String generate(String template, Map<String, String> mapKeyPairs) throws KeyNotFoundException,
-            MapContainsExtraKayException {
-        int countExtraKeyInTemplate = 0;
-        for (Map.Entry map : mapKeyPairs.entrySet()) {
-            String regEx = String.format("\\$\\{%s\\}", map.getKey());
-            Pattern pattern = Pattern.compile(regEx);
-            Matcher matcher = pattern.matcher(template);
-            if (matcher.find()) {
-                template = template.replaceAll(regEx, map.getValue().toString());
+            MapContainsExtraKeyException {
+        Matcher matcher = REG_EX.matcher(template);
+        Set<String> anyKeyFromRegExSet = new HashSet<>();
+        while (matcher.find()) {
+            String keyFromGroup = matcher.group(1);
+            anyKeyFromRegExSet.add(keyFromGroup);
+            if (mapKeyPairs.containsKey(keyFromGroup)) {
+                template = matcher.replaceFirst(mapKeyPairs.get(keyFromGroup));
             } else {
-                countExtraKeyInTemplate++;
+                throw new KeyNotFoundException("This map does not contain the necessary keys!");
             }
+            matcher.reset(template);
         }
-        String regExAnyKey = "\\$\\{.*\\}";
-        Pattern pattern = Pattern.compile(regExAnyKey);
-        Matcher matcher = pattern.matcher(template);
-        if (matcher.find()) {
-            throw new KeyNotFoundException("This map does not contain the necessary keys!");
-        } else if (countExtraKeyInTemplate != 0) {
-            throw new MapContainsExtraKayException("This map contains extra keys!");
+        if (anyKeyFromRegExSet.size() < mapKeyPairs.size()) {
+            throw new MapContainsExtraKeyException("This map contains extra keys!");
         }
         return template;
     }

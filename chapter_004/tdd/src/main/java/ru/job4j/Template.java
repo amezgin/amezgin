@@ -1,7 +1,7 @@
 package ru.job4j;
 
 import ru.job4j.exception.KeyNotFoundException;
-import ru.job4j.exception.MapContainsExtraKayException;
+import ru.job4j.exception.MapContainsExtraKeyException;
 
 import java.util.Map;
 
@@ -21,7 +21,7 @@ public interface Template {
      * @param mapKeyPairs map of keys.
      * @return string with replaced template.
      * @throws KeyNotFoundException         exception when key not found.
-     * @throws MapContainsExtraKayException exception when map contains extra keys.
+     * @throws MapContainsExtraKeyException exception when map contains extra keys.
      */
-    String generate(String template, Map<String, String> mapKeyPairs) throws KeyNotFoundException, MapContainsExtraKayException;
+    String generate(String template, Map<String, String> mapKeyPairs) throws KeyNotFoundException, MapContainsExtraKeyException;
 }
