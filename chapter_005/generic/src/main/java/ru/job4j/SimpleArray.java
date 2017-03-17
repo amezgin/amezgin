@@ -66,4 +66,13 @@ public class SimpleArray<T> {
     public void update(int index, T value) {
         this.object[index] = value;
     }
+
+    /**
+     * This method return the size of array.
+     *
+     * @return size of array.
+     */
+    public int size() {
+        return this.object.length;
+    }
 }
