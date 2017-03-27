@@ -43,7 +43,7 @@ public class SimpleListContainer<T> implements SimpleContainer<T> {
      */
     @Override
     public void add(T value) {
-        Node<T> node = new Node<T>(null, value, null);
+        Node<T> node = new Node<>(null, value, null);
         if (this.size == 0) {
             this.first = node;
             this.last = node;
@@ -99,8 +99,8 @@ public class SimpleListContainer<T> implements SimpleContainer<T> {
      * @return new iterator.
      */
     @Override
-    public Iterator iterator() {
-        return new Iterator() {
+    public Iterator<T> iterator() {
+        return new Iterator<T>() {
             /**
              * The index.
              */
