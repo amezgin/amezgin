@@ -108,6 +108,8 @@ public class SimpleListContainer<T> implements SimpleContainer<T> {
 
             private T nextElement = null;
 
+            private Node<T> currentNode = first;
+
             /**
              * This method returned true if the iterator has more elements.
              *
@@ -125,9 +127,10 @@ public class SimpleListContainer<T> implements SimpleContainer<T> {
              */
             @Override
             public T next() {
-                this.nextElement = get(index);
-                index++;
-                return this.nextElement;
+                this.index++;
+                Node<T> resultNode = this.currentNode;
+                this.currentNode = this.currentNode.next;
+                return resultNode.item;
             }
         };
     }
