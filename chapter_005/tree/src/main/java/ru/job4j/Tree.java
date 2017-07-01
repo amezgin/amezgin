@@ -22,6 +22,11 @@ public class Tree<E extends Comparable<E>> implements SimpleTree<E> {
     private Node<E> rootNode;
 
     /**
+     * This field contains max count children in the tree.
+     */
+    private int maxCountChildren;
+
+    /**
      * The List tree elements.
      */
     private List<Node<E>> queue = new ArrayList<>();
@@ -49,6 +54,37 @@ public class Tree<E extends Comparable<E>> implements SimpleTree<E> {
             }
         }
         return result;
+    }
+
+    /**
+     * TThis method checks that the tree is binary.
+     *
+     * @return true if the tree is binary otherwise false.
+     */
+    public boolean isBinary() {
+        return findMaxCountChildren(this.rootNode) <= 2;
+    }
+
+    /**
+     * This method search max count children in the tree.
+     *
+     * @param start start node.
+     * @return max count children in the tree.
+     */
+    private int findMaxCountChildren(Node<E> start) {
+        int tempCountChildren;
+        for (Node<E> child : start.children) {
+            if (child.children == null) {
+                return 0;
+            } else {
+                tempCountChildren = child.children.size();
+                if (tempCountChildren > this.maxCountChildren) {
+                    this.maxCountChildren = tempCountChildren;
+                }
+                findMaxCountChildren(child);
+            }
+        }
+        return maxCountChildren;
     }
 
     /**

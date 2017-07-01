@@ -89,4 +89,44 @@ public class TreeTest {
 
         assertThat(iterator.next(), is(2));
     }
+
+    /**
+     * Test Tree isBinary() with result true.
+     */
+    @Test
+    public void whenAddElementWithTwoChildrenThenReturnTrue() {
+        Tree<Integer> myTree = new Tree<>();
+        myTree.add(1, 1);
+        myTree.add(1, 2);
+        myTree.add(2, 3);
+        myTree.add(2, 4);
+        myTree.add(3, 5);
+        myTree.add(4, 6);
+
+
+
+        boolean result = myTree.isBinary();
+
+        assertThat(result, is(true));
+    }
+
+    /**
+     * Test Tree isBinary() with result false.
+     */
+    @Test
+    public void whenAddElementWithTwoChildrenThenReturnFalse() {
+        Tree<Integer> myTree = new Tree<>();
+        myTree.add(1, 1);
+        myTree.add(1, 2);
+        myTree.add(2, 3);
+        myTree.add(3, 5);
+        myTree.add(5, 6);
+        myTree.add(5, 7);
+        myTree.add(5, 8);
+
+
+        boolean result = myTree.isBinary();
+
+        assertThat(result, is(false));
+    }
 }
