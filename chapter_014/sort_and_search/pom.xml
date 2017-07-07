@@ -17,5 +17,9 @@
     <modules>
         <module>sorting_by_permutation</module>
         <module>sorting_sample</module>
+        <module>heap_sort</module>
+        <module>merge_sort</module>
+        <module>quick_sort</module>
+        <module>binary_search</module>
     </modules>
 </project>
