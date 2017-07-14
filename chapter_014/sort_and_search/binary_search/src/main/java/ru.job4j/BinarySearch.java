@@ -48,6 +48,7 @@ public class BinarySearch<E> {
      */
     public int findIndex(E value) {
         boolean result = false;
+        int index = -1;
         if (isSort()) {
             result = binarySearch(value, this.array, 0, array.length - 1);
         } else {
@@ -55,9 +56,9 @@ public class BinarySearch<E> {
             result = binarySearch(value, this.array, 0, array.length - 1);
         }
         if (result) {
-            return resultIndex;
+            index = this.resultIndex;
         }
-        return -1;
+        return index;
     }
 
     /**
@@ -70,20 +71,19 @@ public class BinarySearch<E> {
      * @return true if the number is in the array otherwise false.
      */
     private boolean binarySearch(E value, E[] array, int start, int finish) {
-        if (start > finish) {
-            return false;
-        }
-
+        boolean result = true;
         int mid = (start + finish) / 2;
 
-        if (value.equals(array[mid])) {
+        if (start > finish) {
+            result = false;
+        } else if (value.equals(array[mid])) {
             this.resultIndex = mid;
-            return true;
         } else if (comparator.compare(value, array[mid]) < 0) {
-            return binarySearch(value, array, start, mid - 1);
+            result = binarySearch(value, array, start, mid - 1);
         } else {
-            return binarySearch(value, array, mid + 1, finish);
+            result = binarySearch(value, array, mid + 1, finish);
         }
+        return result;
     }
 
     /**
@@ -92,11 +92,13 @@ public class BinarySearch<E> {
      * @return true if array is sorted otherwise false.
      */
     private boolean isSort() {
+        boolean result = true;
         for (int i = 0; i < this.array.length - 1; i++) {
             if (comparator.compare(this.array[i], this.array[i + 1]) > 0) {
-                return false;
+                result = false;
+                break;
             }
         }
-        return true;
+        return result;
     }
 }
