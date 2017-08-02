@@ -1,7 +1,7 @@
 package ru.job4j.frogsleap;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * The class FrogsLeap.
@@ -20,7 +20,7 @@ public class FrogsLeap {
     /**
      * The way that makes the frog.
      */
-    private List<String> path = new ArrayList<>();
+    private Map<Integer, String> path = new HashMap<>();
 
     /**
      * This method considers the minimum number of jumps.
@@ -51,7 +51,7 @@ public class FrogsLeap {
         if (this.circle[finishSegment - 1][finishRing - 1] <= 0) {
             result = "The frog cannot jump into this sector!";
         } else {
-            creatPath(startSegment, startRing, finishSegment, finishRing);
+            createPath(finishSegment - 1, finishRing - 1, this.circle[finishSegment - 1][finishRing - 1]);
             showPath();
             result = String.format("The frog can jump into sector (%s) for %d jumps!", finishSector,
                     this.circle[finishSegment - 1][finishRing - 1] - 1);
@@ -102,50 +102,31 @@ public class FrogsLeap {
     /**
      * This method save the frog path.
      *
-     * @param startSegment  the start segment.
-     * @param startRing     the start ring.
      * @param finishSegment the finish segment.
      * @param finishRing    the finish ring.
+     * @param jump          count jump in definite sector.
      */
-    private void creatPath(int startSegment, int startRing, int finishSegment, int finishRing) {
-        int countJump = this.circle[finishSegment - 1][finishRing - 1];
-        String coord = String.format("The finish coordinates is (%d, %d)", finishSegment, finishRing);
-        this.path.add(coord);
-        finishSegment = finishSegment - 1;
-        int currentRing = finishRing - 1;
-        while (countJump != 2) {
-            int changeSegment = 0;
-            int findStep = 0;
-            for (int segmentStep = 1; segmentStep <= 3; segmentStep++) {
-                for (int ring = 0; ring < 10; ring++) {
-                    if (this.circle[finishSegment][currentRing]
-                            - this.circle[(finishSegment - segmentStep + 16) % 16][ring] == 1
-                            && (segmentStep + Math.abs(currentRing - ring)) == 3) {
-                        currentRing = ring;
-                        changeSegment = segmentStep;
-                        countJump--;
-                        findStep++;
-                        coord = String.format("(%d, %d)", (finishSegment - segmentStep + 16) % 16 + 1, ring + 1);
-                        this.path.add(coord);
-                        break;
-                    }
-                }
-                if (findStep != 0) {
-                    break;
-                }
-            }
-            finishSegment = (finishSegment - changeSegment + 16) % 16;
+    private void createPath(int finishSegment, int finishRing, int jump) {
+        String coord = String.format("(%d, %d)", (finishSegment + 17) % 16, finishRing + 1);
+        if (finishRing > 9 || finishRing < 0 || this.circle[(finishSegment + 16) % 16][finishRing] == -1 || jump == 0) {
+            return;
         }
-        coord = String.format("The start coordinates is(%d, %d)", startSegment, startRing);
-        this.path.add(coord);
+        if (this.circle[(finishSegment + 16) % 16][finishRing] == jump) {
+            this.path.put(jump, coord);
+        }
+        createPath(finishSegment - 3, finishRing, jump - 1);
+        createPath(finishSegment - 2, finishRing - 1, jump - 1);
+        createPath(finishSegment - 2, finishRing + 1, jump - 1);
+        createPath(finishSegment - 1, finishRing - 2, jump - 1);
+        createPath(finishSegment - 1, finishRing + 2, jump - 1);
     }
 
     /**
      * This method show the frog path.
      */
     private void showPath() {
-        for (int i = this.path.size() - 1; i >= 0; i--) {
-            System.out.println(this.path.get(i));
+        for (String value : path.values()) {
+            System.out.print(value);
         }
     }
 }
