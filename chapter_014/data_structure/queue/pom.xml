@@ -3,18 +3,14 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-
-    <groupId>ru.job4.chapter_014</groupId>
-    <artifactId>chapter_014</artifactId>
+    <groupId>ru.job4.chapter_014.data_structure.queue</groupId>
+    <artifactId>queue</artifactId>
     <version>2.0</version>
     <packaging>pom</packaging>
+
     <parent>
-        <groupId>ru.job4j</groupId>
-        <artifactId>junior</artifactId>
+        <groupId>ru.job4.chapter_014.data_structure</groupId>
+        <artifactId>data_structure</artifactId>
         <version>2.0</version>
     </parent>
-    <modules>
-        <module>sort_and_search</module>
-        <module>data_structure</module>
-    </modules>
 </project>
