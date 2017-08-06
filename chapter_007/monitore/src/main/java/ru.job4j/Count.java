@@ -34,6 +34,8 @@ public class Count {
      * @return value.
      */
     public int getValue() {
-        return this.value;
+        synchronized (this) {
+            return this.value;
+        }
     }
 }
