@@ -1,4 +1,4 @@
-package ru.job4j.parallelseach;
+package ru.job4j.parallelsearch;
 
 import java.io.File;
 import java.io.IOException;
