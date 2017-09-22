@@ -4,9 +4,8 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * Class ParallerSearch.
@@ -20,12 +19,12 @@ public class ParallerSearch {
     /**
      * This field stores the search results.
      */
-    private List<String> result = new ArrayList<>();
+    private List<String> result = new CopyOnWriteArrayList<>();
 
     /**
      * This field stores the list of files with a certain extension.
      */
-    private List<String> listFiles = new ArrayList<>();
+    private List<String> listFiles = new CopyOnWriteArrayList<>();
 
     /**
      * This method searches for the specified text in the file system.
@@ -89,9 +88,9 @@ public class ParallerSearch {
 
 
         thread1.start();
+        thread1.join();
         thread2.start();
         thread3.start();
-        thread1.join();
         thread2.join();
         thread3.join();
     }
@@ -112,7 +111,7 @@ public class ParallerSearch {
      * @param exts the extensions.
      * @throws ValidateException ValidateException.
      */
-    private synchronized void searchFiles(String root, List<String> exts) throws ValidateException {
+    private void searchFiles(String root, List<String> exts) throws ValidateException {
         File rootDir = new File(root);
         if (!rootDir.isDirectory()) {
             throw new ValidateException(String.format("%s is not directory or directory not exists!", root));
@@ -135,13 +134,14 @@ public class ParallerSearch {
     }
 
     /**
-     * Thies method searches files with the specified text.
+     * This method searches files with the specified text.
      *
      * @param text the specified text.
      * @throws IOException IOException.
      */
-    private synchronized void searchFileWithText(String text) throws IOException {
-        String path = getFilePathFromListFiles();
+    private void searchFileWithText(String text) throws IOException {
+        String path = this.listFiles.get(0);
+        this.listFiles.remove(0);
 
         if (path != null) {
             byte[] bytes = Files.readAllBytes(Paths.get(path));
@@ -150,23 +150,5 @@ public class ParallerSearch {
                 this.result.add(path);
             }
         }
-    }
-
-    /**
-     * This method return the path to the file from the list of files.
-     *
-     * @return path to the file.
-     */
-    private synchronized String getFilePathFromListFiles() {
-        String result;
-        Iterator<String> iter = this.listFiles.iterator();
-        if (iter.hasNext()) {
-            result = this.listFiles.get(0);
-            iter.next();
-            iter.remove();
-        } else {
-            result = null;
-        }
-        return result;
     }
 }
