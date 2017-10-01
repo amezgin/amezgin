@@ -5,13 +5,13 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.ReentrantLock;
 
 /**
- * Class Bomberman.
+ * Class Monster.
  *
  * @author Alexander Mezgin
  * @version 1.0
- * @since 24.09.2017
+ * @since 01.10.2017
  */
-public class Bomberman extends Figure implements Runnable {
+public class Monster extends Figure implements Runnable {
 
     /**
      * The moviement.
@@ -19,12 +19,17 @@ public class Bomberman extends Figure implements Runnable {
     private Moviement moviement = new Moviement();
 
     /**
+     * The stop factor.
+     */
+    private boolean stop = false;
+
+    /**
      * The constructor.
      *
      * @param name  name.
      * @param board board.
      */
-    public Bomberman(String name, GameBoard board) {
+    public Monster(String name, GameBoard board) {
         super(board, name);
     }
 
@@ -91,10 +96,18 @@ public class Bomberman extends Figure implements Runnable {
     }
 
     /**
-     * This method setup the start position the hero.
+     * This method setup the start position the monster.
      */
     private void setStartPosition() {
-        this.setPosition(0, 0);
-        this.getBoard().getBoard()[0][0].lock();
+        int coordX = (int) (Math.random() * (this.getBoard().getxSize() - 1) + 0.5);
+        int coordY = (int) (Math.random() * (this.getBoard().getySize() - 1) + 0.5);
+        boolean value = false;
+        while (!value) {
+            if (!this.getBoard().getBoard()[coordX][coordY].isLocked() && coordX != 0 && coordY != 0) {
+                this.setPosition(coordX, coordY);
+                this.getBoard().getBoard()[coordX][coordY].lock();
+                value = true;
+            }
+        }
     }
 }

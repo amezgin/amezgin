@@ -84,4 +84,19 @@ public abstract class Figure {
     public GameBoard getBoard() {
         return board;
     }
+
+    /**
+     * This method checks the valid movie.
+     *
+     * @param x x.
+     * @param y y.
+     * @return true if movie valid otherwise false.
+     */
+    protected boolean checkMovie(int x, int y) {
+        boolean result = true;
+        if (x >= this.getBoard().getxSize() || x < 0 || y >= this.getBoard().getySize() || y < 0) {
+            result = false;
+        }
+        return result;
+    }
 }
