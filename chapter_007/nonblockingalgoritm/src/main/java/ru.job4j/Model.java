@@ -17,7 +17,7 @@ public class Model {
     /**
      * The version of the model.
      */
-    private volatile int version = 0;
+    private int version = 0;
 
     /**
      * The constructor.
