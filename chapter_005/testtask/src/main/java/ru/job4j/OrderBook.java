@@ -14,6 +14,12 @@ import java.util.TreeMap;
  * @since 25.09.2017
  */
 public class OrderBook {
+
+    /**
+     * The line separator.
+     */
+    private final static String lineSeparator = System.getProperty("line.separator");
+
     /**
      * The name of order book.
      */
@@ -75,7 +81,7 @@ public class OrderBook {
             }
         }
         this.matching();
-        this.show(sortedSell, sortedBuy);
+        this.show();
     }
 
     /**
@@ -97,9 +103,6 @@ public class OrderBook {
      * This method make deals between sell and buy orders.
      */
     private void matching() {
-        int diff;
-        int valueSell;
-        int valueBuy;
         Iterator<Float> iterSell = this.sortedSell.keySet().iterator();
         Iterator<Float> iterBuy = this.sortedBuy.keySet().iterator();
         if (iterBuy.hasNext() && iterSell.hasNext()) {
@@ -107,9 +110,9 @@ public class OrderBook {
             Float nextSell = iterSell.next();
             while (iterBuy.hasNext() && iterSell.hasNext()) {
                 if (nextBuy >= nextSell) {
-                    valueSell = this.sortedSell.get(nextSell).getVolume();
-                    valueBuy = this.sortedBuy.get(nextBuy).getVolume();
-                    diff = valueSell - valueBuy;
+                    int valueSell = this.sortedSell.get(nextSell).getVolume();
+                    int valueBuy = this.sortedBuy.get(nextBuy).getVolume();
+                    int diff = valueSell - valueBuy;
                     if (diff > 0) {
                         this.sortedSell.get(nextSell).setVolume(-valueBuy);
                         iterBuy.remove();
@@ -133,20 +136,16 @@ public class OrderBook {
 
     /**
      * This method print the result to screen.
-     *
-     * @param sell sorted sell map.
-     * @param buy  sorted buy map.
      */
-    private void show(Map<Float, Order> sell, Map<Float, Order> buy) {
-        String lineSeparator = System.getProperty("line.separator");
+    private void show() {
         StringBuilder builder = new StringBuilder();
-        builder.append(String.format("\tOrder book: $%s%s", this.orderBookName, lineSeparator));
-        builder.append(String.format("\tBID\t\t\t  ASK%s", lineSeparator));
-        builder.append(String.format("Volume@Price – Volume@Price%s", lineSeparator));
+        System.out.println(String.format("\tOrder book: $%s", this.orderBookName));
+        System.out.println(String.format("\tBID\t\t\t  ASK"));
+        System.out.println(String.format("Volume@Price – Volume@Price"));
         Iterator<Float> iterSell = this.sortedSell.keySet().iterator();
         Iterator<Float> iterBuy = this.sortedBuy.keySet().iterator();
-        Float nextBuy;
-        Float nextSell;
+        Float nextBuy = 0f;
+        Float nextSell = 0f;
         int maxSize = Math.max(this.sortedBuy.size(), this.sortedSell.size());
         for (int i = 0; i < maxSize; i++) {
             if (iterBuy.hasNext() && iterSell.hasNext()) {
