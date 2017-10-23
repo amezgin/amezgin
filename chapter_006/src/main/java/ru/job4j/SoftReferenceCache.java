@@ -46,28 +46,18 @@ public class SoftReferenceCache {
         if (this.cache.containsKey(fileName)) {
             result = this.cache.get(fileName).get();
         } else {
-            result = readFile(fileName);
+            String pathToFile = String.format("%s/%s", this.path, fileName);
+            StringBuilder tmp = new StringBuilder();
+            try (Scanner scanner = new Scanner(new File(pathToFile))) {
+                while (scanner.hasNextLine()) {
+                    tmp.append(String.format("%s%s", scanner.nextLine(), System.getProperty("line.separator")));
+                }
+                result = tmp.toString();
+                this.cache.put(fileName, new SoftReference<>(result));
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
         }
         return result;
-    }
-
-    /**
-     * This method read the file and set this in the cache.
-     *
-     * @param fileName the file name.
-     * @return the text from the file.
-     */
-    private String readFile(String fileName) {
-        String pathToFile = String.format("%s/%s", this.path, fileName);
-        StringBuilder result = new StringBuilder();
-        try (Scanner scanner = new Scanner(new File(pathToFile))) {
-            while (scanner.hasNextLine()) {
-                result.append(String.format("%s%s", scanner.nextLine(), System.getProperty("line.separator")));
-            }
-            this.cache.put(fileName, new SoftReference<String>(result.toString()));
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        return result.toString();
     }
 }
