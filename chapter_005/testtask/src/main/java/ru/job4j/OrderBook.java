@@ -18,7 +18,7 @@ public class OrderBook {
     /**
      * The line separator.
      */
-    private final static String lineSeparator = System.getProperty("line.separator");
+    private static final String LINE_SEPARATOR = System.getProperty("line.separator");
 
     /**
      * The name of order book.
@@ -155,17 +155,17 @@ public class OrderBook {
                         this.sortedBuy.get(nextBuy).getPrice(),
                         this.sortedSell.get(nextSell).getVolume(),
                         this.sortedSell.get(nextSell).getPrice(),
-                        lineSeparator));
+                        LINE_SEPARATOR));
             } else if (iterBuy.hasNext() && !iterSell.hasNext()) {
                 nextBuy = iterBuy.next();
                 builder.append(String.format("%7d@%6.2f - --------------%s", this.sortedBuy.get(nextBuy).getVolume(),
                         this.sortedBuy.get(nextBuy).getPrice(),
-                        lineSeparator));
+                        LINE_SEPARATOR));
             } else {
                 nextSell = iterSell.next();
                 builder.append(String.format("-------------- - %7d@%6.2f%s", this.sortedSell.get(nextSell).getVolume(),
                         this.sortedSell.get(nextSell).getPrice(),
-                        lineSeparator));
+                        LINE_SEPARATOR));
             }
         }
         System.out.println(builder);
