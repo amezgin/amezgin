@@ -112,9 +112,7 @@ public class Aquarium {
             Fish fish2 = this.aquarium.get(new Random().nextInt(this.id) + 1);
             boolean sign = false;
             while (!sign) {
-                if (fish1 != null && fish2 != null
-                        && fish1.getGender() != fish2.getGender()
-                        && !fish1.getName().equals(fish2.getName())) {
+                if (fish1 != null && fish2 != null && fish1.meet(fish2)) {
                     sign = true;
                 } else {
                     fish1 = this.aquarium.get(new Random().nextInt(this.id) + 1);
