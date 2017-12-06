@@ -1,1 +1,1 @@
-CREATE DATABASE java_a_from_z;
+CREATE DATABASE java_from_a_to_z;
