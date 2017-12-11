@@ -1,0 +1,26 @@
+CREATE TABLE transmission (
+	id SERIAL PRIMARY KEY,
+	type VARCHAR(20) NOT NULL,
+	vendor VARCHAR(20) NOT NULL
+	);
+	
+CREATE TABLE engine (
+	id SERIAL PRIMARY KEY,
+	type VARCHAR(20) NOT NULL,
+	vendor VARCHAR(20) NOT NULL
+	);
+	
+CREATE TABLE gearbox (
+	id SERIAL PRIMARY KEY,
+	type VARCHAR(20) NOT NULL,
+	vendor VARCHAR(20) NOT NULL
+	);
+	
+CREATE TABLE automobile (
+	id SERIAL PRIMARY KEY,
+	type VARCHAR(20) NOT NULL,
+	vendor VARCHAR(20) NOT NULL,
+	transm_id INTEGER UNIQUE REFERENCES transmission(id) NOT NULL,
+	engine_id INTEGER UNIQUE REFERENCES engine(id) NOT NULL,
+	gear_id INTEGER UNIQUE REFERENCES gearbox(id) NOT NULL
+	);
