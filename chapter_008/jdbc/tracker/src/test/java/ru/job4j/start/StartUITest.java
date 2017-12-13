@@ -1,7 +1,6 @@
 package ru.job4j.start;
 
 import org.junit.Test;
-import ru.job4j.models.Comment;
 import ru.job4j.models.Item;
 
 import java.util.ArrayList;
@@ -221,38 +220,5 @@ public class StartUITest {
         menuTracker.select(key);
 
         assertThat(tracker.findByDescription("descr"), is(checked));
-    }
-
-    /**
-     * Test addComment.
-     */
-    @Test
-    public void whenAddCommentThenReturnItemWithComment() {
-        final Tracker tracker = new Tracker();
-
-        final String[] answers = {"7", "1", "comment"};
-        final StubInput stubInput = new StubInput(answers);
-
-        MenuTracker menuTracker = new MenuTracker(stubInput, tracker);
-
-        final Item item = new Item("name", "descr");
-        final Item item1 = new Item("name1", "desr1");
-
-        tracker.addItem(item);
-        tracker.addItem(item1);
-
-        item.setId("1");
-        item1.setId("2");
-
-        final Comment comment = new Comment("comment");
-        tracker.addComment("1", comment);
-
-        menuTracker.fillAction();
-
-        final int key = Integer.valueOf(stubInput.ask("Question!"));
-
-        menuTracker.select(key);
-
-        assertThat(tracker.findById("1").getAllComments().get(0), is(comment));
     }
 }

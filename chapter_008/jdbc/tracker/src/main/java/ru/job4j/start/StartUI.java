@@ -34,14 +34,15 @@ public class StartUI {
      */
     private void init() {
         Tracker tracker = new Tracker();
+        tracker.connectToDB();
         MenuTracker menu = new MenuTracker(this.input, tracker);
         menu.fillAction();
-
         do {
             System.out.println(descriptionProgram);
             menu.show();
             menu.select(input.ask("Select the action: ", menu.getRangeActions()));
         } while (!"Y".equals(this.input.ask("Do you realy exit? Press 'y' to eit: ").toUpperCase()));
+        tracker.disconnectDB();
     }
 
     /**

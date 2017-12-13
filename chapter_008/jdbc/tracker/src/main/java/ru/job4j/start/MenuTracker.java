@@ -1,6 +1,5 @@
 package ru.job4j.start;
 
-import ru.job4j.models.Comment;
 import ru.job4j.models.Item;
 
 /**
@@ -166,7 +165,7 @@ public class MenuTracker {
         @Override
         public void execute(Input input, Tracker tracker) {
             String id = input.ask("Enter the id of the deleted item: ");
-            tracker.removeItem(tracker.findById(id));
+            tracker.removeItem(id);
         }
     }
 
@@ -317,7 +316,7 @@ public class MenuTracker {
         @Override
         public void execute(Input input, Tracker tracker) {
             String name = input.ask("Enter the name of the searched item: ");
-            System.out.println(tracker.findByName(name));
+            tracker.findByName(name).forEach(System.out::println);
         }
     }
 
@@ -354,7 +353,7 @@ public class MenuTracker {
         @Override
         public void execute(Input input, Tracker tracker) {
             String description = input.ask("Enter the description of the searched item: ");
-            System.out.println(tracker.findByDescription(description));
+            tracker.findByDescription(description).forEach(System.out::println);
         }
     }
 
@@ -392,7 +391,7 @@ public class MenuTracker {
         public void execute(Input input, Tracker tracker) {
             String id = input.ask("Enter the id of the item to which to add a comment: ");
             String comment = input.ask("Enter the comment: ");
-            System.out.println(tracker.addComment(id, new Comment(comment)));
+            tracker.addComment(id, comment);
         }
     }
 }
