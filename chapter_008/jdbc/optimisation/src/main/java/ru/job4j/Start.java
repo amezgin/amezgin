@@ -1,5 +1,7 @@
 package ru.job4j;
 
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.Scanner;
 
 /**
@@ -41,17 +43,16 @@ public class Start {
         connectToDB.setUrl(ask("Enter the URL for connect to DB."));
         connectToDB.setLogin(ask("Enter the login for connect to DB."));
         connectToDB.setPassword(ask("Enter the password for connect to DB."));
-        int n = Integer.parseInt(ask("Enter the number N."));
         long start = System.currentTimeMillis();
-        CreateDatabase create = new CreateDatabase(n, connectToDB.connectToDB());
-        create.init();
-        CreateXMLFromDatabase createXMLFromDatabase = new CreateXMLFromDatabase(connectToDB.connectToDB());
-        createXMLFromDatabase.createXML();
-        connectToDB.disconnectDB();
-        ConvertWithXSLT convertWithXSLT = new ConvertWithXSLT();
-        convertWithXSLT.convert();
-        GetSumFromParsingXML parsingXML = new GetSumFromParsingXML();
-        System.out.println(String.format("The sum of elements in XML file is %d.", parsingXML.getSum()));
+        try (Connection connect = connectToDB.getConnectToDB()) {
+            connectToDB.createTableInDB();
+            WorkWithXML createXML = new WorkWithXML(connect);
+            createXML.createXML();
+            createXML.convert();
+            System.out.println(String.format("The sum of elements in XML file is %d.", createXML.getSum()));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         long finish = System.currentTimeMillis();
         System.out.println(String.format("The execution time of the program was the %d seconds.", (finish - start) / 1000));
     }
