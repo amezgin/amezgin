@@ -9,7 +9,6 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.text.ParseException;
@@ -39,6 +38,11 @@ public class ParserJSOUP extends TimerTask {
     private int page = 1;
 
     /**
+     * The ConnectDB.
+     */
+    private ConnectDB connectDB = null;
+
+    /**
      * The SimpleDateFormat for converting dates from forum.
      */
     private final SimpleDateFormat format = new SimpleDateFormat("d MMM yy, HH:mm", new Locale("ru", "RU"));
@@ -59,15 +63,10 @@ public class ParserJSOUP extends TimerTask {
     private int countStartProgram = 0;
 
     /**
-     * The connection.
-     */
-    private Connection conn;
-
-    /**
      * The constructor.
      */
-    public ParserJSOUP() {
-        this.conn = conn;
+    public ParserJSOUP(ConnectDB connectDB) {
+        this.connectDB = connectDB;
     }
 
     /**
@@ -76,16 +75,21 @@ public class ParserJSOUP extends TimerTask {
     @Override
     public void run() {
         LOG.info("The parser is started!");
-        ConnectDB connectDB = new ConnectDB();
-        this.conn = connectDB.connectToDB();
-        parseSite();
-        connectDB.disconnectDB();
-        LOG.info("The parser is stopped!");
+        try (Connection conn = this.connectDB.getConnectToDB()) {
+            this.connectDB.createTable();
+            parseSite();
+            LOG.info("The parser is stopped!");
+        } catch (SQLException e) {
+            LOG.error(e.getMessage(), e);
+        } finally {
+            LOG.info("The connection is stopped!");
+        }
     }
 
     /**
      * This method parsing the site and save result to database.
      */
+
     private void parseSite() {
         this.countStartProgram++;
         if (this.countStartProgram == 1) {
@@ -113,7 +117,7 @@ public class ParserJSOUP extends TimerTask {
                             isParseComplete = true;
                             break;
                         }
-                        saveToDB(new Vacancy(linkVacancy, description, createDate));
+                        this.connectDB.saveToDB(new Vacancy(linkVacancy, description, createDate));
                     }
                 }
                 this.page++;
@@ -122,23 +126,6 @@ public class ParserJSOUP extends TimerTask {
             }
         } while (!isParseComplete);
         this.dateInspectionsVacancies = setDateStartProgram();
-    }
-
-    /**
-     * This method adds date in to db.
-     */
-    private void saveToDB(Vacancy vacancy) {
-        try (PreparedStatement prs = this.conn.prepareStatement("INSERT INTO offer (link, description, create_date) "
-                + "VALUES (?, ?, ?)")) {
-            prs.setString(1, vacancy.getLink());
-            prs.setString(2, vacancy.getDescription());
-            prs.setTimestamp(3, vacancy.getCreateDate());
-            prs.executeUpdate();
-            LOG.info("The vacancy added to database!");
-
-        } catch (SQLException e) {
-            LOG.error(e.getMessage(), e);
-        }
     }
 
     /**

@@ -18,7 +18,7 @@ public class ConnectToDB {
     /**
      * The number of the elements.
      */
-    private final int COUNT_ELEMENT = 1_000_000;
+    private final int countElement = 1_000_000;
 
     /**
      * The URL to connect to the database.
@@ -100,7 +100,7 @@ public class ConnectToDB {
     private void fillDB() {
         try (PreparedStatement pst = this.conn.prepareStatement("INSERT INTO field (value) VALUES (?)");) {
             this.conn.setAutoCommit(false);
-            for (int i = 1; i <= this.COUNT_ELEMENT; i++) {
+            for (int i = 1; i <= this.countElement; i++) {
                 pst.setInt(1, i);
                 pst.addBatch();
             }

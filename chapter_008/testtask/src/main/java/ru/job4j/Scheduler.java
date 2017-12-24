@@ -23,10 +23,16 @@ public class Scheduler {
     private Timer timer = null;
 
     /**
+     * The ConnectDB.
+     */
+    private ConnectDB connectDB = null;
+
+    /**
      * The constructor.
      */
     public Scheduler() {
-        this.myTask = new ParserJSOUP();
+        this.connectDB  = new ConnectDB();
+        this.myTask = new ParserJSOUP(connectDB);
         this.timer = new Timer(true);
     }
 
@@ -34,10 +40,6 @@ public class Scheduler {
      * This method start the program once a day.
      */
     public void startProgramOnceDay() {
-        ConnectDB connectDB = new ConnectDB();
-        connectDB.connectToDB();
-        connectDB.createTable();
-        connectDB.disconnectDB();
         this.timer.scheduleAtFixedRate(myTask, 0, 60 * 60 * 24 * 1000);
     }
 
@@ -45,9 +47,6 @@ public class Scheduler {
      * This method start the program the several time a day.
      */
     public void startProgramSeveralTimeDay(int n) {
-        ConnectDB connectDB = new ConnectDB();
-        connectDB.connectToDB();
-        connectDB.createTable();
         this.timer.scheduleAtFixedRate(myTask, 0, 60 * 60 * 24 * 1000 / n);
     }
 

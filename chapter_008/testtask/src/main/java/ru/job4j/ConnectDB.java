@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Properties;
@@ -44,39 +45,18 @@ public class ConnectDB {
     /**
      * This method establishes a connection to the database.
      */
-    public Connection connectToDB() {
+    public Connection getConnectToDB() {
         try (InputStream in = getClass().getClassLoader().getResourceAsStream(PATH_TO_PROPERTIES)) {
             prs.load(in);
             this.conn = DriverManager.getConnection(prs.getProperty("url"),
                     prs.getProperty("user"), prs.getProperty("password"));
             LOG.info("The connect to the database is established!");
-
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
         } catch (IOException e) {
             LOG.error(e.getMessage(), e);
         }
         return this.conn;
-    }
-
-    /**
-     * This method closes the connection with the database.
-     */
-    public void disconnectDB() {
-        try {
-            this.conn.close();
-        } catch (SQLException e) {
-            LOG.error(e.getMessage(), e);
-        } finally {
-            LOG.info("The connect to the database is cut off!");
-            if (this.conn != null) {
-                try {
-                    this.conn.close();
-                } catch (SQLException e) {
-                    LOG.error(e.getMessage(), e);
-                }
-            }
-        }
     }
 
     /**
@@ -87,6 +67,23 @@ public class ConnectDB {
             st.execute("CREATE TABLE IF NOT EXISTS offer (id SERIAL PRIMARY KEY, link TEXT UNIQUE NOT NULL, "
                     + "description TEXT NOT NULL, create_date TIMESTAMP NOT NULL);");
             LOG.info("The table offer is create!");
+        } catch (SQLException e) {
+            LOG.error(e.getMessage(), e);
+        }
+    }
+
+    /**
+     * This method adds date in to db.
+     */
+    public void saveToDB(Vacancy vacancy) {
+        try (PreparedStatement prs = this.conn.prepareStatement("INSERT INTO offer (link, description, create_date) "
+                + "VALUES (?, ?, ?)")) {
+            prs.setString(1, vacancy.getLink());
+            prs.setString(2, vacancy.getDescription());
+            prs.setTimestamp(3, vacancy.getCreateDate());
+            prs.executeUpdate();
+            LOG.info("The vacancy added to database!");
+
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
         }
