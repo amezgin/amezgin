@@ -17,6 +17,7 @@
         <module>structure</module>
         <module>http</module>
         <module>servlet</module>
+        <module>jsp</module>
     </modules>
     <dependencies>
         <dependency>
