@@ -23,7 +23,7 @@ public class UsersServlet extends HttpServlet {
     /**
      * The field of type UserStore.
      */
-    private final UserStore users = UserStore.getInstance();
+    private final UserStore users = UserStore.INSTANCE;
 
     /**
      * Overrides method doGet.

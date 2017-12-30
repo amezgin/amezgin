@@ -19,12 +19,12 @@ import java.util.Properties;
  * @version 1.0
  * @since 20.12.2017
  */
-public class UserStore {
+public enum UserStore {
 
     /**
      * The instance.
      */
-    private static UserStore instance;
+    INSTANCE;
 
     /**
      * This field contains the name of the properties file.
@@ -44,22 +44,10 @@ public class UserStore {
     /**
      * The constructor.
      */
-    private UserStore() {
+    UserStore() {
         loadProperties();
         connectToDB();
         createTable();
-    }
-
-    /**
-     * This method returns the instance.
-     *
-     * @return instance.
-     */
-    public static synchronized UserStore getInstance() {
-        if (instance == null) {
-            instance = new UserStore();
-        }
-        return instance;
     }
 
     /**
