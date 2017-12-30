@@ -22,7 +22,7 @@ public class CreateUser extends HttpServlet {
     /**
      * The field of type UserStore.
      */
-    private final UserStore users = UserStore.getInstance();
+    private final UserStore users = UserStore.INSTANCE;
 
     /**
      * Overrides method doPost.

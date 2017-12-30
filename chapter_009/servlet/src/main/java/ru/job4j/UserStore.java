@@ -21,12 +21,12 @@ import java.util.Properties;
  * @version 1.0
  * @since 20.12.2017
  */
-public class UserStore {
+public enum UserStore {
 
     /**
      * The instance.
      */
-    private static volatile UserStore instance;
+    INSTANCE;
 
     /**
      * This field contains the name of the properties file.
@@ -51,7 +51,7 @@ public class UserStore {
     /**
      * The constructor.
      */
-    private UserStore() {
+    UserStore() {
         this.ds = new BasicDataSource();
         loadProperties();
         this.ds.setDriverClassName(this.prs.getProperty("driver_class"));
@@ -67,25 +67,6 @@ public class UserStore {
             e.printStackTrace();
         }
         createTable();
-    }
-
-    /**
-     * This method returns the instance.
-     *
-     * @return instance.
-     */
-    public static UserStore getInstance() {
-        UserStore localInstance = instance;
-        if (localInstance == null) {
-            synchronized (UserStore.class) {
-                localInstance = instance;
-                if (localInstance == null) {
-                    localInstance = new UserStore();
-                    instance = localInstance;
-                }
-            }
-        }
-        return localInstance;
     }
 
     /**
