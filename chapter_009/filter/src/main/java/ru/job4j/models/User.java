@@ -58,7 +58,7 @@ public class User {
         this.password = password;
         this.role = role;
         this.email = email;
-        this.createDate = createDate;
+        this.createDate = new Timestamp(createDate.getTime());
     }
 
     /**
@@ -112,7 +112,7 @@ public class User {
      * @return createDate.
      */
     public Timestamp getCreateDate() {
-        return this.createDate;
+        return new Timestamp(this.createDate.getTime());
     }
 
     /**

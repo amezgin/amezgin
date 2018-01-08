@@ -52,14 +52,11 @@ public class SigninController extends HttpServlet {
         if (users.isCredentional(login, password)) {
             HttpSession session = req.getSession();
             User user = users.getUser(login);
-            synchronized (session) {
-                session.setAttribute("login", login);
-                session.setAttribute("user", user);
-                if ("ADMIN".equals(user.getRole().getName())) {
-                    resp.sendRedirect(String.format("%s/", req.getContextPath()));
-                } else if ("USER".equals(user.getRole().getName())) {
-                    resp.sendRedirect(String.format("%s/user", req.getContextPath()));
-                }
+            session.setAttribute("login", login);
+            if ("ADMIN".equals(user.getRole().getName())) {
+                resp.sendRedirect(String.format("%s/", req.getContextPath()));
+            } else if ("USER".equals(user.getRole().getName())) {
+                req.getRequestDispatcher(String.format("%s/user", req.getContextPath())).forward(req, resp);
             }
         } else {
             req.setAttribute("error", "Credentional invalid");

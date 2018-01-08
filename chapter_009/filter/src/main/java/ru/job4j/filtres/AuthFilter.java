@@ -1,6 +1,7 @@
 package ru.job4j.filtres;
 
 import ru.job4j.models.User;
+import ru.job4j.models.UserStore;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -22,6 +23,11 @@ import java.io.IOException;
  */
 public class AuthFilter implements Filter {
 
+    /**
+     * The field of type UserStore.
+     */
+    private final UserStore users = UserStore.INSTANCE;
+
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
 
@@ -31,10 +37,10 @@ public class AuthFilter implements Filter {
     public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) req;
         HttpSession session = request.getSession(true);
-        User user = (User) session.getAttribute("user");
+        User user = users.getUser((String) session.getAttribute("login"));
         if (request.getRequestURI().contains("/signin")) {
             chain.doFilter(req, resp);
-        } else if (session == null || user == null) {
+        } else if (user == null) {
             ((HttpServletResponse) resp).sendRedirect("/signin");
         } else if ("USER".equals(user.getRole().getName())) {
             if (request.getRequestURI().contains("/user")) {

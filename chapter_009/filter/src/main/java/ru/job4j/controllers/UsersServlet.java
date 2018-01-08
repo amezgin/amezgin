@@ -33,7 +33,8 @@ public class UsersServlet extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        User user = users.getUser((String) req.getAttribute("login"));
+        User user = users.getUser(req.getParameter("login"));
+        System.out.println(req.getParameter("login"));
         req.setAttribute("user", user);
         req.getRequestDispatcher("/WEB-INF/views/userView.jsp").forward(req, resp);
     }
