@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div style="position: fixed; right:0; z-index:500;">
+    <form action="./userSignout" method="post">
+        <button type="submit" class="btn btn-primary btn-sm">Sign out</button>
+    </form>
+</div>
+<br>
+<br>
+<h3 align="center">Create the new user</h3>
+<form align="center" class="form-inline" role="form">
+    <div class="form-group">
+        <input type="text" class="form-control" placeholder="Name" name="name" required autofocus/>
+    </div>
+    <div class="form-group">
+        <input type="text" class="form-control" placeholder="Login" name="login" required/>
+    </div>
+    <div class="form-group">
+        <input type="text" class="form-control" placeholder="Password" name="password" required/>
+    </div>
+    <div class="form-group">
+        <select class="form-control" name="role">
+            <option value="1">ADMIN</option>
+            <option value="2">USER</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <input type="text" class="form-control" placeholder="Email" name="email" required/>
+    </div>
+    <div class="form-group">
+        <input type="text" class="form-control" placeholder="Country" name="country" required/>
+    </div>
+    <div class="form-group">
+        <input type="text" class="form-control" placeholder="City" name="city" required/>
+    </div>
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary" onclick="createUser()">Create user</button>
+    </div>
+</form>
+<br>
+<br>
+<h3 align="center">Search the user</h3>
+<div class="container">
+    <div class="row">
+        <form role="search">
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Login" name="searchLogin">
+                <span class="input-group-btn">
+    	    <button class="btn btn-info" type="button" onclick="searchUser()">
+	      	  <i class="glyphicon glyphicon-search"></i>
+    	    </button>
+	      </span>
+            </div>
+        </form>
+    </div>
+</div>
+<br>
+<br>
+<div class="container">
+    <div class="row">
+        <div class="col-xs-6 col-sm-6 col-lg-12">
+            <table id="users" class="table table-condensed">
+                <caption>
+                    <legend align="center">List of Users</legend>
+                </caption>
+                <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Login</th>
+                    <th>Password</th>
+                    <th>Role</th>
+                    <th>Email</th>
+                    <th>Country</th>
+                    <th>City</th>
+                    <th>Create date</th>
+                    <th>Edit user</th>
+                    <th>Delete user</th>
+                </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+</div>
+<script>
+    function createUser() {
+        $.ajax('./create', {
+            method: 'post',
+            data: {
+                name: document.getElementsByName("name")[0].value,
+                login: document.getElementsByName("login")[0].value,
+                password: document.getElementsByName("password")[0].value,
+                role: document.getElementsByName("role")[0].value,
+                email: document.getElementsByName("email")[0].value,
+                country: document.getElementsByName("country")[0].value,
+                city: document.getElementsByName("city")[0].value
+            }
+        });
+    }
+
+    function searchUser() {
+        sessionStorage.setItem('searchLogin', document.getElementsByName("searchLogin")[0].value);
+        document.location = "./searchView.html";
+    }
+
+    function editUser(userLogin) {
+        sessionStorage.setItem('oldLogin', userLogin);
+        location.href = "./adminUpdateView.html";
+    }
+
+    function deleteUser(userLogin) {
+        location.href = "./delete?login=" + userLogin;
+    }
+
+    $(document).ready(function getUsers() {
+        $.ajax('./admin', {
+            method: 'get',
+            dataType: "json",
+            success(data) {
+                $.each(data, function (i, elem) {
+                    document.getElementById("users").innerHTML += "<tbody><tr>"
+                        + "<td>" + elem.name + "</td>"
+                        + "<td>" + elem.login + "</td>"
+                        + "<td>" + elem.password + "</td>"
+                        + "<td>" + elem.role.name + "</td>"
+                        + "<td>" + elem.email + "</td>"
+                        + "<td>" + elem.country + "</td>"
+                        + "<td>" + elem.city + "</td>"
+                        + "<td>" + elem.createDate + "</td>"
+                        + "<td><button class='btn btn-primary btn-sm' onclick='editUser(\"" + elem.login + "\")'><i class='glyphicon glyphicon-edit'></i>Edit User</button></td>"
+                        + "<td><button class='btn btn-primary btn-sm' onclick='deleteUser(\"" + elem.login + "\")'><i class='glyphicon glyphicon-remove'></i>Delete User</button></td>"
+                        + "</tr></tbody>";
+                });
+            }
+        });
+    });
+</script>
+</body>
+</html>

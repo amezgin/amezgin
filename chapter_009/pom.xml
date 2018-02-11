@@ -20,6 +20,7 @@
         <module>jsp</module>
         <module>filter</module>
         <module>mvcjstl</module>
+        <module>html</module>
     </modules>
     <dependencies>
         <dependency>
