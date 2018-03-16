@@ -21,6 +21,7 @@
         <module>filter</module>
         <module>mvcjstl</module>
         <module>html</module>
+        <module>testtask</module>
     </modules>
     <dependencies>
         <dependency>

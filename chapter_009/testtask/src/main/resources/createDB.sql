@@ -1,0 +1,3 @@
+DROP DATABASE IF EXISTS testtask;
+
+CREATE DATABASE testtask;
