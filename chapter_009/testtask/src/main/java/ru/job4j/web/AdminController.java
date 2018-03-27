@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -41,6 +42,15 @@ public class AdminController extends HttpServlet {
     private UserRepositoryImpl users;
 
     /**
+     * Override destroy.
+     */
+    @Override
+    public void destroy() {
+        daoFactory.closeConnectionsPool();
+        super.destroy();
+    }
+
+    /**
      * Overrides method doGet.
      *
      * @param req  request.
@@ -52,8 +62,8 @@ public class AdminController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String action = req.getParameter("action");
         if (action == null) {
-            try {
-                users = new UserRepositoryImpl(daoFactory.getConnection());
+            try (Connection conn = daoFactory.getConnection()) {
+                users = new UserRepositoryImpl(conn);
                 resp.setContentType("text/json");
                 resp.setCharacterEncoding("UTF-8");
                 String json = new Gson().toJson(users.getAllUserWithAllDependencies());
@@ -64,11 +74,11 @@ public class AdminController extends HttpServlet {
                 e.printStackTrace();
             }
         } else if (action.equals("search")) {
-            try {
+            try (Connection conn = daoFactory.getConnection()) {
                 resp.setContentType("text/json");
                 resp.setCharacterEncoding("UTF-8");
-                users = new UserRepositoryImpl(daoFactory.getConnection());
-                User user = new UserDaoImpl(daoFactory.getConnection()).getByLogin(req.getParameter("searchLogin"));
+                users = new UserRepositoryImpl(conn);
+                User user = new UserDaoImpl(conn).getByLogin(req.getParameter("searchLogin"));
                 if (user != null) {
                     Address address = users.getUserAddress(user);
                     List<MusicType> musicTypes = users.getUserMusicType(user);
@@ -83,9 +93,9 @@ public class AdminController extends HttpServlet {
                 e.printStackTrace();
             }
         } else if (action.equals("delete")) {
-            try {
+            try (Connection conn = daoFactory.getConnection()) {
                 Integer id = Integer.parseInt(req.getParameter("id"));
-                UserDaoImpl userDao = new UserDaoImpl(daoFactory.getConnection());
+                UserDaoImpl userDao = new UserDaoImpl(conn);
                 userDao.delete(id);
                 resp.sendRedirect("./adminView.html");
             } catch (SQLException e) {
@@ -101,17 +111,17 @@ public class AdminController extends HttpServlet {
                 user.setId(0);
                 address = new Address(null, null, null, null, null);
             } else {
-                try {
+                try (Connection conn = daoFactory.getConnection()) {
                     Integer id = Integer.parseInt(req.getParameter("id"));
-                    user = new UserDaoImpl(daoFactory.getConnection()).getById(id);
-                    address = new AddressDaoImpl(daoFactory.getConnection()).getById(id);
+                    user = new UserDaoImpl(conn).getById(id);
+                    address = new AddressDaoImpl(conn).getById(id);
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
             }
             List<MusicType> musicType = null;
-            try {
-                musicType = new MusicTypeDaoImpl(daoFactory.getConnection()).getAll();
+            try (Connection conn = daoFactory.getConnection()) {
+                musicType = new MusicTypeDaoImpl(conn).getAll();
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -142,9 +152,9 @@ public class AdminController extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Integer id = Integer.parseInt(req.getParameter("id"));
         Role role = null;
-        try {
+        try (Connection conn = daoFactory.getConnection()) {
             Integer idRole = Integer.parseInt(req.getParameter("role"));
-            role = new RoleDaoImpl(daoFactory.getConnection()).getById(idRole);
+            role = new RoleDaoImpl(conn).getById(idRole);
             role.setId(idRole);
         } catch (SQLException e) {
             e.printStackTrace();

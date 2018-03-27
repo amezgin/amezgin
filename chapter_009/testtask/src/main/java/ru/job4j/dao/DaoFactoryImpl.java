@@ -83,4 +83,19 @@ public enum DaoFactoryImpl implements DaoFactory {
     public Connection getConnection() throws SQLException {
         return this.conn;
     }
+
+    /**
+     * This method close pool connection.
+     */
+    @Override
+    public void closeConnectionsPool() {
+        if (!this.ds.isClosed()) {
+            try {
+                this.ds.close();
+                this.ds = null;
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 }

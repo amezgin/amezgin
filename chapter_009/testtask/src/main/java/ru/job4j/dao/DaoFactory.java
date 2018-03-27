@@ -18,4 +18,9 @@ public interface DaoFactory {
      * @return connection.
      */
     Connection getConnection() throws SQLException;
+
+    /**
+     * This method close pool connection.
+     */
+    void closeConnectionsPool();
 }
